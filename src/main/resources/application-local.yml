@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://rdb:3306/test
+    username: root
+    password: 123123
+
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    open-in-view: false
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true

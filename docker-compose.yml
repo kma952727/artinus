@@ -1,0 +1,33 @@
+services:
+  backend:
+    container_name: altinus_backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      rdb:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    networks:
+      - altinus_bridge
+
+  rdb:
+    image: mysql:8
+    container_name: rdb
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123123
+      - MYSQL_DATABASE=test
+    networks:
+      - altinus_bridge
+    healthcheck:
+      test: [ 'CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '--password=123123' ]
+      timeout: 20s
+      retries: 1
+
+networks:
+  altinus_bridge: {}
